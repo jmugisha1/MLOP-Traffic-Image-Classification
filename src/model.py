@@ -1,8 +1,12 @@
 from tensorflow.keras.applications import MobileNetV2
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.optimizers import Adam
-from tensorflow.keras.layers import  Dense, GlobalAveragePooling2D
+from tensorflow.keras.layers import  Dense, Input, GlobalAveragePooling2D
 from tensorflow.keras.utils import image_dataset_from_directory
+from tensorflow.keras.models import load_model, Model  
+import matplotlib.pyplot as plt
+import numpy as np
+import random
 
 
 
@@ -31,10 +35,12 @@ def cnn_model( train_dir, validate_dir, test_dir):
     
     base_model.trainable = False 
 
-    model = Sequential([
-        base_model,                          
-        GlobalAveragePooling2D(),           
-        Dense(4, activation='softmax')])
+    inputs = Input(shape=(224, 224, 3))
+    x = base_model(inputs, training=False) 
+    x = GlobalAveragePooling2D()(x)
+    outputs = Dense(4, activation='softmax')(x)
+    model = Model(inputs, outputs)
+
 
     model.compile(
         optimizer=Adam(learning_rate=0.001),
@@ -54,40 +60,40 @@ def cnn_model( train_dir, validate_dir, test_dir):
 
     
     # Save the model
-    model.save('../models/ccn.h5')
+    model.save('C:/Users/Administrator/Desktop/Projects/MLOP-Traffic-Image-Classification/models/image-classes.h5')
 
     return history
 
 
-# for images, labels in test_ds.take(1):
-#     index = random.randint(0, images.shape[0] - 1)
-#     random_image = images[index]
-#     random_label = labels[index]
-#     break 
+# PREDICTING A RANDOM IMAGE IN TEST DATASET
 
+# FUNCTION TO RETRAIN THE MODEL
 
-# model.save('traffic-image-classification.keras')
-
-
-
-# def retrain_model(data, epochs):
-#     import tensorflow as tf
-#     from tensorflow.keras.models import load_model
-#     from tensorflow.keras.utils import image_dataset_from_directory
+def retrain_model(train_dir):
     
-#     model = load_model('traffic-image-classification.keras')
+    train_ds = image_dataset_from_directory(train_dir, image_size=(224, 224), batch_size=32, label_mode='categorical')
+    train_ds = train_ds.map(lambda x, y: (x / 255.0, y))
 
-#     train_ds = image_dataset_from_directory(data, image_size=(224, 224), batch_size=32)
-
-#     model.fit(train_ds, epochs=epochs)
-
-#     model.save('traffic-image-classification.keras')
-#     print("Model retrained and saved!")
     
-#     return model
+    model = load_model('C:/Users/Administrator/Desktop/Projects/MLOP-Traffic-Image-Classification/models/image-classes.h5')
 
-# # how to call the fuction
-# # retrained_model = retrain_model('path/to/new/data', 15)
+    # 
+    model.compile(
+        optimizer=Adam(learning_rate=0.001),
+        loss='categorical_crossentropy',
+        metrics=['accuracy']
+    )
 
+    # 
+    history = model.fit(train_ds, epochs=5)
 
+    # Save the model
+    model.save('C:/Users/Administrator/Desktop/Projects/MLOP-Traffic-Image-Classification/models/image-classes.h5')
 
+    print("Model retrained and saved!")
+    # Print only the final results
+    print("Final training results:")
+    for key in history.history:
+        print(f"{key}: {history.history[key][-1]}")
+    
+    return history
