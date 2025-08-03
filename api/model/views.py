@@ -11,7 +11,7 @@ import numpy as np
 
 # FUNCTION TO MAKE A PREDICTION USING THE MODEL
 # model_path = r'C:/Users/Administrator\Desktop/Projects/MLOP-Traffic-Image-Classification/models/image-classes.h5'
-model_path = 'ml-models/image-classes.h5'  # Adjust the path as needed
+model_path = 'ml-model/image-classes.h5'  # Adjust the path as needed
 model = load_model(model_path)
 
 class_names = ['bus', 'car', 'motorcycle', 'truck']
