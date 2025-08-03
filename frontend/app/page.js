@@ -33,7 +33,7 @@ export default function Home() {
     formData.append("image", image);
 
     try {
-      const res = await fetch("http://127.0.0.1:8000/api/predict/", {
+      const res = await fetch("https://mlop-api.onrender.com/api/predict/", {
         method: "POST",
         body: formData,
       });
