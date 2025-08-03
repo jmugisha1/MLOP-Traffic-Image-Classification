@@ -27,6 +27,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = [
     'mlop-traffic-image-classification-2.onrender.com',
+    '*'
 ]
 
 
