@@ -25,7 +25,9 @@ SECRET_KEY = 'django-insecure-92lw+ho58u0aa2%0%#wt4+9!o&zk9n4(9mbhes7w0o3g*+8l6^
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    'mlop-traffic-image-classification-2.onrender.com',
+]
 
 
 # Application definition
