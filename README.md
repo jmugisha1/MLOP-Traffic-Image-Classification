@@ -36,10 +36,9 @@ pnpm run dev
 
 ### setting up notebook
 
-````bash
+```bash
 cd src
 pip install -r requirements.txt
-```bash
-````
+```
 
 ### frontend link
