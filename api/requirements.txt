@@ -3,3 +3,4 @@ tensorflow
 pillow
 numpy
 django
+django-cors-headers
