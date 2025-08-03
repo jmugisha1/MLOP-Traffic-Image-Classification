@@ -43,6 +43,8 @@ pip install -r requirements.txt
 
 ### frontend link
 
+https://mlops-ui.vercel.app/
+
 ### locust results
 
 ### 4 users
