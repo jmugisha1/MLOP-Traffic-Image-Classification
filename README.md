@@ -43,7 +43,7 @@ pip install -r requirements.txt
 
 ### frontend link
 ### note the model takes time to load and show results 
-### please be patient 
+### please be patient on the front-end !!!
 
 https://mlops-ui.vercel.app/
 
